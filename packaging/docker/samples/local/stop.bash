@@ -24,5 +24,5 @@ set -eu
 
 FDB_PORT="${FDB_PORT:-4550}"
 
-FDB_PORT=$FDB_PORT docker-compose down
+FDB_PORT=$FDB_PORT docker compose down
 echo "Docker-based FDB cluster is now down."

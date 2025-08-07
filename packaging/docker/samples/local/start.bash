@@ -25,7 +25,7 @@ set -eu
 FDB_CLUSTER_FILE="${FDB_CLUSTER_FILE:-docker.cluster}"
 FDB_PORT="${FDB_PORT:-4550}"
 
-FDB_PORT=$FDB_PORT docker-compose up -d fdb
+FDB_PORT=$FDB_PORT docker compose up -d fdb
 echo "docker:docker@127.0.0.1:$FDB_PORT" > $FDB_CLUSTER_FILE
 
 # Attempt to connect. Configure the database if necessary.

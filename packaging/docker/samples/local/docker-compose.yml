@@ -23,7 +23,7 @@
 version: '3'
 services:
   fdb:
-    image: foundationdb:6.1.8
+    image: foundationdb/my-foundationdb:7.3.67
     ports:
       - $FDB_PORT:$FDB_PORT/tcp
     environment:

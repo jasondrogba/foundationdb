@@ -30,8 +30,16 @@ RUN apt-get update
 # dnsutils is needed to have dig installed to create cluster file
 RUN apt-get install -y --no-install-recommends ca-certificates dnsutils
 
-RUN wget "https://github.com/apple/foundationdb/releases/download/${FDB_VERSION}/foundationdb-clients_${FDB_VERSION}-1_amd64.deb"
-RUN dpkg -i foundationdb-clients_${FDB_VERSION}-1_amd64.deb
+RUN ARCH=$(dpkg --print-architecture) && \
+    if [ "$ARCH" = "amd64" ]; then \
+        ARCH_DEB="amd64"; \
+    elif [ "$ARCH" = "arm64" ]; then \
+        ARCH_DEB="aarch64"; \
+    else \
+        echo "Unsupported architecture: $ARCH" && exit 1; \
+    fi && \
+    wget "https://github.com/apple/foundationdb/releases/download/${FDB_VERSION}/foundationdb-clients_${FDB_VERSION}-1_${ARCH_DEB}.deb" && \
+    dpkg -i "foundationdb-clients_${FDB_VERSION}-1_${ARCH_DEB}.deb"
 
 WORKDIR /go/src/app
 COPY . .
